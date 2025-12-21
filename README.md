@@ -14,7 +14,7 @@ The focus is on **clean backend design, search, and business logic**, not UI.
 
 ## Time Expectation
 
-This assignment should take approximately **8-12 hours** to complete. If you find yourself spending significantly more time, you may be over-engineering. Focus on core functionality first, then add bonuses if time permits.
+This assignment should take approximately **8 hours** to complete. If you find yourself spending significantly more time, you may be over-engineering. Focus on core functionality first, then add bonuses if time permits.
 
 ---
 
@@ -455,27 +455,26 @@ The following are optional:
 * Rank title matches higher than content matches
 * Improve relevance
 
-### Semantic Search
+### Semantic Search Using Embeddings (Advanced Bonus – Optional)
 
-Enhance search to understand **meaning**, not just exact keywords.
+As an advanced bonus, you may implement semantic search using text embeddings.
 
-**Approach:** Implement a simple synonym/concept mapping system.
+A simple and acceptable approach is to:
 
-**Example Implementation:**
-* Create a mapping of related terms:
-  * "laws of motion" → ["Newton", "force", "dynamics"]
-  * "rate of change" → ["velocity", "acceleration", "derivative"]
-  * "storage" → ["array", "list", "stack"]
-* When searching, expand the query to include related terms
-* No need for ML models or embeddings
+* Use a pre-trained local sentence embedding model
+* Generate embeddings for subtopic content after seed data is loaded
+* Generate an embedding for the search query
+* Compare embeddings using cosine similarity
+* Return the most relevant results
 
-**Expected Behavior:**
-* Query: "laws of motion" → Returns Physics course (Newton's Laws content)
-* Query: "rate of change" → Returns Math course (velocity/calculus content)
+You do not need to:
 
-**Documentation Required:**
-* Explain your synonym mapping approach in README
-* List the concept mappings you implemented
+* Train any models
+* Use paid APIs
+* Use vector databases
+* Optimize for performance
+
+A simple, demonstrative implementation is sufficient.
 
 ---
 
