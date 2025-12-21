@@ -12,6 +12,12 @@ The focus is on **clean backend design, search, and business logic**, not UI.
 
 ---
 
+## Time Expectation
+
+This assignment should take approximately **8-12 hours** to complete. If you find yourself spending significantly more time, you may be over-engineering. Focus on core functionality first, then add bonuses if time permits.
+
+---
+
 ## Tech Stack (Required)
 * Java 17+
 * Spring Boot
@@ -86,6 +92,50 @@ Courses and content are **read-only** (no creation or updates via APIs).
   * Log in and receive a JWT
 * JWT is required for all **user-specific actions**
 
+### Example: Register
+
+**Request:**
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "email": "student@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response:**
+```json
+{
+  "id": 1,
+  "email": "student@example.com",
+  "message": "User registered successfully"
+}
+```
+
+### Example: Login
+
+**Request:**
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "student@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "email": "student@example.com",
+  "expiresIn": 86400
+}
+```
+
 ---
 
 ## Public vs Authenticated APIs
@@ -121,6 +171,69 @@ Authentication is required for:
   * subtopics
   * markdown content
 
+### Example: List All Courses
+
+**Request:**
+```http
+GET /api/courses
+```
+
+**Response:**
+```json
+{
+  "courses": [
+    {
+      "id": "physics-101",
+      "title": "Introduction to Physics",
+      "description": "Fundamental concepts of motion, forces, and energy.",
+      "topicCount": 3,
+      "subtopicCount": 9
+    },
+    {
+      "id": "math-101",
+      "title": "Basic Mathematics for Problem Solving",
+      "description": "Core mathematical concepts used in science and everyday problem solving.",
+      "topicCount": 3,
+      "subtopicCount": 9
+    }
+  ]
+}
+```
+
+### Example: Get Course by ID
+
+**Request:**
+```http
+GET /api/courses/physics-101
+```
+
+**Response:**
+```json
+{
+  "id": "physics-101",
+  "title": "Introduction to Physics",
+  "description": "Fundamental concepts of motion, forces, and energy.",
+  "topics": [
+    {
+      "id": "kinematics",
+      "title": "Kinematics",
+      "subtopics": [
+        {
+          "id": "speed",
+          "title": "Speed",
+          "content": "Speed is the distance travelled per unit time.\n\nIt is a scalar quantity..."
+        },
+        {
+          "id": "velocity",
+          "title": "Velocity",
+          "content": "Velocity is the rate of change of displacement..."
+        }
+      ]
+    }
+  ]
+}
+```
+
 ---
 
 ## Search Functionality (Core Feature)
@@ -134,19 +247,65 @@ Search should match against:
 * Subtopic titles
 * Subtopic content (Markdown text)
 
-Search behavior should:
+### Required Search Behavior
 
-* Be case-insensitive
-* Support partial matches (e.g. `velo` → `velocity`)
-* Tolerate small spelling mistakes (e.g. `physcs` → `physics`)
-* Prefer matches in titles over matches deep in content
+* **Case-insensitive matching** (mandatory)
+* **Partial matches** (e.g. `velo` → `velocity`) (mandatory)
+* Return courses that contain matching content
 
-Implementation options:
+### Bonus Search Features
 
-* PostgreSQL search (acceptable)
-* Elasticsearch (recommended and evaluated more favorably)
+* **Fuzzy matching** to tolerate spelling mistakes (e.g. `physcs` → `physics`)
+* **Ranking/scoring** to prefer matches in titles over matches in content
+
+### Implementation Options
+
+* **PostgreSQL full-text search** (acceptable baseline)
+* **Elasticsearch** (bonus - evaluated more favorably)
 
 Search endpoints must be **public**.
+
+### Example Search Queries
+
+* `"velocity"` → should return Physics course (matches subtopic title and content)
+* `"Newton"` → should return Physics course (matches in dynamics topic)
+* `"rate of change"` → should return Math course (matches in functions topic)
+
+### Example Search API
+
+**Request:**
+```http
+GET /api/search?q=velocity
+```
+
+**Response:**
+```json
+{
+  "query": "velocity",
+  "results": [
+    {
+      "courseId": "physics-101",
+      "courseTitle": "Introduction to Physics",
+      "matches": [
+        {
+          "type": "subtopic",
+          "topicTitle": "Kinematics",
+          "subtopicId": "velocity",
+          "subtopicTitle": "Velocity",
+          "snippet": "Velocity is the rate of change of displacement..."
+        },
+        {
+          "type": "content",
+          "topicTitle": "Work and Energy",
+          "subtopicId": "kinetic-energy",
+          "subtopicTitle": "Kinetic Energy",
+          "snippet": "...depends on the mass and the square of the velocity..."
+        }
+      ]
+    }
+  ]
+}
+```
 
 ---
 
@@ -155,6 +314,30 @@ Search endpoints must be **public**.
 * A user can enroll in a course
 * A user cannot enroll in the same course more than once
 * Enrollment is required before tracking progress
+
+**Example Request:**
+```http
+POST /api/courses/{courseId}/enroll
+Authorization: Bearer <jwt-token>
+```
+
+**Example Response:**
+```json
+{
+  "enrollmentId": 123,
+  "courseId": "physics-101",
+  "courseTitle": "Introduction to Physics",
+  "enrolledAt": "2025-12-21T09:00:00Z"
+}
+```
+
+**Error Response (already enrolled):**
+```json
+{
+  "error": "Already enrolled",
+  "message": "You are already enrolled in this course"
+}
+```
 
 ---
 
@@ -166,15 +349,60 @@ Search endpoints must be **public**.
 * Allowed only if the user is enrolled in the parent course
 * Operation must be idempotent (safe to repeat)
 
+**Example Request:**
+```http
+POST /api/subtopics/{subtopicId}/complete
+Authorization: Bearer <jwt-token>
+```
+
+**Example Response:**
+```json
+{
+  "subtopicId": "velocity",
+  "completed": true,
+  "completedAt": "2025-12-21T10:30:00Z"
+}
+```
+
 ---
 
 ### View Progress
 
-Users should be able to see:
+Users should be able to view their progress for a specific enrollment.
 
-* Total subtopics in a course
-* Completed subtopics
+**Endpoint:** `GET /api/enrollments/{enrollmentId}/progress`
+
+**Response should include:**
+
+* Course details (id, title)
+* Total subtopics count
+* Completed subtopics count
 * Completion percentage
+* List of completed subtopics with completion timestamps
+
+**Example Response:**
+```json
+{
+  "enrollmentId": 123,
+  "courseId": "physics-101",
+  "courseTitle": "Introduction to Physics",
+  "totalSubtopics": 9,
+  "completedSubtopics": 5,
+  "completionPercentage": 55.56,
+  "completedItems": [
+    {
+      "subtopicId": "speed",
+      "subtopicTitle": "Speed",
+      "completedAt": "2025-12-20T14:20:00Z"
+    },
+    {
+      "subtopicId": "velocity",
+      "subtopicTitle": "Velocity",
+      "completedAt": "2025-12-21T10:30:00Z"
+    }
+  ]
+}
+```
 
 ---
 
@@ -206,6 +434,15 @@ The deployed application must:
 
 Submissions that do not meet these requirements **will not be evaluated**.
 
+### Recommended Deployment Platforms (Free Tier)
+
+* **Railway** - Easy PostgreSQL + Spring Boot deployment
+* **Render** - Supports PostgreSQL and Java applications
+* **Fly.io** - Good for containerized applications
+* **Heroku** - Classic option (limited free tier)
+
+Choose any platform that allows public access to your Swagger UI.
+
 ---
 
 ## Bonus (Optional)
@@ -220,14 +457,96 @@ The following are optional:
 
 ### Semantic Search
 
-* Return results based on **meaning**, not just keywords
-  Examples:
+Enhance search to understand **meaning**, not just exact keywords.
 
-  * “laws of motion” → Newton’s Laws
-  * “rate of change” → velocity / acceleration
-* A simple embedding-based or heuristic approach is sufficient
-* No advanced NLP required
-* Must be explained briefly in the README
+**Approach:** Implement a simple synonym/concept mapping system.
+
+**Example Implementation:**
+* Create a mapping of related terms:
+  * "laws of motion" → ["Newton", "force", "dynamics"]
+  * "rate of change" → ["velocity", "acceleration", "derivative"]
+  * "storage" → ["array", "list", "stack"]
+* When searching, expand the query to include related terms
+* No need for ML models or embeddings
+
+**Expected Behavior:**
+* Query: "laws of motion" → Returns Physics course (Newton's Laws content)
+* Query: "rate of change" → Returns Math course (velocity/calculus content)
+
+**Documentation Required:**
+* Explain your synonym mapping approach in README
+* List the concept mappings you implemented
+
+---
+
+## What NOT to Implement
+
+To keep the scope manageable, **do not implement** the following:
+
+* ❌ User profile management (beyond basic registration/login)
+* ❌ Course/topic/subtopic CRUD operations (content is read-only from seed data)
+* ❌ Admin panel or admin users
+* ❌ Email verification or password reset
+* ❌ User roles beyond basic authentication
+
+Focus on the core features: **browsing, searching, enrolling, and progress tracking**.
+
+---
+
+## Error Handling Requirements
+
+Your API should handle errors gracefully and return appropriate HTTP status codes:
+
+### Required Status Codes
+
+* `200 OK` - Successful GET requests
+* `201 Created` - Successful POST requests (enrollment, registration)
+* `400 Bad Request` - Invalid input (missing fields, invalid format)
+* `401 Unauthorized` - Missing or invalid JWT token
+* `403 Forbidden` - Valid token but insufficient permissions
+* `404 Not Found` - Resource doesn't exist
+* `409 Conflict` - Duplicate enrollment, email already exists
+
+### Error Response Format
+
+All errors should return a consistent JSON structure:
+
+```json
+{
+  "error": "Error Type",
+  "message": "Human-readable description of what went wrong",
+  "timestamp": "2025-12-21T10:30:00Z"
+}
+```
+
+### Example Error Scenarios
+
+**Enrolling without authentication:**
+```json
+{
+  "error": "Unauthorized",
+  "message": "JWT token is missing or invalid",
+  "timestamp": "2025-12-21T10:30:00Z"
+}
+```
+
+**Marking subtopic complete without enrollment:**
+```json
+{
+  "error": "Forbidden",
+  "message": "You must be enrolled in this course to mark subtopics as complete",
+  "timestamp": "2025-12-21T10:30:00Z"
+}
+```
+
+**Course not found:**
+```json
+{
+  "error": "Not Found",
+  "message": "Course with id 'invalid-course' does not exist",
+  "timestamp": "2025-12-21T10:30:00Z"
+}
+```
 
 ---
 

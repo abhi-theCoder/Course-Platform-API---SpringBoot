@@ -1,0 +1,215 @@
+{
+  "courses": [
+    {
+      "id": "physics-101",
+      "title": "Introduction to Physics",
+      "description": "Fundamental concepts of motion, forces, and energy.",
+      "topics": [
+        {
+          "id": "kinematics",
+          "title": "Kinematics",
+          "subtopics": [
+            {
+              "id": "speed",
+              "title": "Speed",
+              "content": "Speed is the distance travelled per unit time.\n\nIt is a scalar quantity, meaning it has magnitude but no direction. Speed tells us how fast an object is moving."
+            },
+            {
+              "id": "velocity",
+              "title": "Velocity",
+              "content": "Velocity is the rate of change of displacement with respect to time.\n\nUnlike speed, velocity is a vector quantity and includes both magnitude and direction."
+            },
+            {
+              "id": "acceleration",
+              "title": "Acceleration",
+              "content": "Acceleration is defined as the rate of change of velocity with respect to time.\n\nIt can be calculated using the formula:\n\na = (v₂ - v₁) / t\n\nAcceleration can be positive, negative, or zero depending on the motion."
+            }
+          ]
+        },
+        {
+          "id": "dynamics",
+          "title": "Dynamics",
+          "subtopics": [
+            {
+              "id": "force",
+              "title": "Force",
+              "content": "A force is a push or a pull that can change the motion or shape of an object.\n\nForces can cause objects to accelerate, slow down, stop, or change direction."
+            },
+            {
+              "id": "newtons-first-law",
+              "title": "Newton’s First Law",
+              "content": "Newton’s First Law states that an object remains at rest or in uniform motion unless acted upon by an external force.\n\nThis law is also known as the law of inertia."
+            },
+            {
+              "id": "newtons-second-law",
+              "title": "Newton’s Second Law",
+              "content": "Newton’s Second Law states that the acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass.\n\nIt is commonly expressed as:\n\nF = ma"
+            }
+          ]
+        },
+        {
+          "id": "work-and-energy",
+          "title": "Work and Energy",
+          "subtopics": [
+            {
+              "id": "work",
+              "title": "Work",
+              "content": "Work is said to be done when a force causes a displacement of an object.\n\nMathematically, work is defined as the product of force and displacement in the direction of the force."
+            },
+            {
+              "id": "kinetic-energy",
+              "title": "Kinetic Energy",
+              "content": "Kinetic energy is the energy possessed by an object due to its motion.\n\nIt depends on the mass and the square of the velocity of the object."
+            },
+            {
+              "id": "potential-energy",
+              "title": "Potential Energy",
+              "content": "Potential energy is the energy stored in an object due to its position or configuration.\n\nGravitational potential energy depends on height and mass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "math-101",
+      "title": "Basic Mathematics for Problem Solving",
+      "description": "Core mathematical concepts used in science and everyday problem solving.",
+      "topics": [
+        {
+          "id": "algebra-basics",
+          "title": "Algebra Basics",
+          "subtopics": [
+            {
+              "id": "variables-and-expressions",
+              "title": "Variables and Expressions",
+              "content": "Variables are symbols used to represent unknown values.\n\nAlgebraic expressions combine variables, numbers, and operations to describe mathematical relationships."
+            },
+            {
+              "id": "linear-equations",
+              "title": "Linear Equations",
+              "content": "A linear equation is an equation in which the highest power of the variable is one.\n\nLinear equations often represent straight-line relationships."
+            },
+            {
+              "id": "quadratic-equations",
+              "title": "Quadratic Equations",
+              "content": "Quadratic equations are equations of degree two.\n\nThey are commonly written in the form ax² + bx + c = 0 and can have one or two real solutions."
+            }
+          ]
+        },
+        {
+          "id": "functions",
+          "title": "Functions",
+          "subtopics": [
+            {
+              "id": "what-is-a-function",
+              "title": "What is a Function?",
+              "content": "A function is a relationship that assigns exactly one output to each input.\n\nFunctions are commonly used to model real-world relationships."
+            },
+            {
+              "id": "graph-of-a-function",
+              "title": "Graph of a Function",
+              "content": "The graph of a function visually represents the relationship between inputs and outputs.\n\nGraphs help in understanding trends and rates of change."
+            },
+            {
+              "id": "rate-of-change",
+              "title": "Rate of Change",
+              "content": "The rate of change describes how one quantity changes with respect to another.\n\nIn physics, acceleration is an example of rate of change of velocity."
+            }
+          ]
+        },
+        {
+          "id": "calculus-intuition",
+          "title": "Calculus Intuition",
+          "subtopics": [
+            {
+              "id": "limits",
+              "title": "Limits",
+              "content": "A limit describes the value that a function approaches as the input approaches a certain value.\n\nLimits are the foundation of calculus."
+            },
+            {
+              "id": "derivatives",
+              "title": "Derivatives",
+              "content": "A derivative represents the rate of change of a function.\n\nDerivatives are used to calculate velocity, acceleration, and slopes of curves."
+            },
+            {
+              "id": "real-world-examples",
+              "title": "Real-World Examples",
+              "content": "Calculus concepts are used to model motion, growth, and change in real-world systems.\n\nThey are widely applied in physics, engineering, and economics."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cs-101",
+      "title": "Introduction to Computer Science",
+      "description": "Foundational concepts of programming, algorithms, and data structures.",
+      "topics": [
+        {
+          "id": "programming-basics",
+          "title": "Programming Basics",
+          "subtopics": [
+            {
+              "id": "what-is-a-program",
+              "title": "What is a Program?",
+              "content": "A program is a set of instructions that tells a computer what to do.\n\nPrograms are written to solve problems or automate tasks."
+            },
+            {
+              "id": "variables-and-data-types",
+              "title": "Variables and Data Types",
+              "content": "Variables store data values, and data types define the kind of data a variable can hold.\n\nCommon data types include integers, strings, and booleans."
+            },
+            {
+              "id": "control-flow",
+              "title": "Control Flow",
+              "content": "Control flow determines the order in which instructions are executed.\n\nExamples include conditional statements and loops."
+            }
+          ]
+        },
+        {
+          "id": "algorithms",
+          "title": "Algorithms",
+          "subtopics": [
+            {
+              "id": "what-is-an-algorithm",
+              "title": "What is an Algorithm?",
+              "content": "An algorithm is a step-by-step procedure for solving a problem.\n\nAlgorithms must be clear, finite, and effective."
+            },
+            {
+              "id": "time-complexity",
+              "title": "Time Complexity",
+              "content": "Time complexity measures how the runtime of an algorithm grows with input size.\n\nIt helps compare the efficiency of different algorithms."
+            },
+            {
+              "id": "searching-vs-sorting",
+              "title": "Searching vs Sorting",
+              "content": "Searching algorithms are used to find elements, while sorting algorithms arrange data.\n\nBoth are fundamental to efficient problem solving."
+            }
+          ]
+        },
+        {
+          "id": "data-structures",
+          "title": "Data Structures",
+          "subtopics": [
+            {
+              "id": "arrays",
+              "title": "Arrays",
+              "content": "Arrays store elements in contiguous memory locations.\n\nThey allow fast access using an index."
+            },
+            {
+              "id": "lists",
+              "title": "Lists",
+              "content": "Lists store ordered collections of elements.\n\nThey allow dynamic resizing and sequential access."
+            },
+            {
+              "id": "stacks",
+              "title": "Stacks",
+              "content": "A stack is a linear data structure that follows the Last In, First Out principle.\n\nCommon operations include push and pop."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
