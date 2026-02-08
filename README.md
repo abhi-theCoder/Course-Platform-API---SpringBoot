@@ -1,8 +1,43 @@
 # Backend Intern Assignment – Course Platform API
 
+---
+
+### Developed by **Abhishek Kumar Mahto**
+[![GitHub](https://img.shields.io/badge/GitHub-abhishekkumarmahto-181717?style=flat&logo=github)](https://github.com/abhi-theCoder)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Abhishek%20Kumar%20Mahto-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/abhishek-kumar-mahto005/)
+
+---
+
+
 ## Goal
 
 Build a backend service for a learning platform where users can:
+
+---
+
+## 🚀 How to Run with Supabase
+
+This project is optimized to run with a Supabase PostgreSQL database.
+
+### 1. Configure Environment
+Create a `.env` file in the root directory with your Supabase credentials:
+```env
+DB_URL=jdbc:postgresql://<YOUR_SUPABASE_HOST>:5432/postgres
+DB_USERNAME=postgres
+DB_PASSWORD=<YOUR_DATABASE_PASSWORD>
+JWT_SECRET=your_custom_secret_key
+```
+
+### 2. Run the Application
+Use the provided script to load the environment variables and start the server:
+```bash
+chmod +x run_with_supabase.sh
+./run_with_supabase.sh
+```
+
+The application will be available at `http://localhost:8080` and Swagger UI at `http://localhost:8080/swagger-ui.html`.
+
+---
 
 * Browse and search course content (public)
 * Enroll in courses (authenticated)
