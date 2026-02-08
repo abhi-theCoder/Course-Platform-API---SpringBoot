@@ -17,4 +17,4 @@ ENV SPRING_JPA_SHOW_SQL=false
 ENV SWAGGER_ENABLED=false
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Djava.net.preferIPv4Stack=true", "-jar", "app.jar"]
